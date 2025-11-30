@@ -31,7 +31,7 @@ E:
 %%
 
 int main(void) {
-    printf("Enter any arithmetic expression (+, -, *, /, %% and parentheses):\n");
+    printf("Enter any arithmetic expression (+, -, *, /, % and parentheses):\n");
     yyparse();
     if (flag == 0)
         printf("Entered arithmetic expression is Valid\n");

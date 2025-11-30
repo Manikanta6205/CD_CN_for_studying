@@ -39,7 +39,7 @@ int main() {
     string d, k;
     cout << "dataword: ";
     cin >> d;
-    cout << "divisor: ";
+    cout << "divisor: "; // CRC12:1 0000 0000 1111 - CRC16:1 0000 0000 0000 1101
     cin >> k;
 
     string cw = enc(d, k);
