@@ -81,6 +81,10 @@ int main() {
 
     cout << "\nEnter arithmetic expression:\n";
     getline(cin, expr);
+    posn = 0;
+    val.clear();
+    L.clear();
+    R.clear();
 
     int root = expression();
 
