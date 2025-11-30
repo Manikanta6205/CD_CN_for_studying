@@ -9,7 +9,7 @@ char START;
 /* ============== COMPUTE FIRST ============== */
 set<char> computeFIRST(char X) {
     // If X is terminal → FIRST(X) = {X}
-    if (islower(X))
+    if (!isupper(X))
         return {X};
 
     if (!FIRST[X].empty())
@@ -46,7 +46,7 @@ void computeFOLLOW(char X) {
         FOLLOW[X].insert('$');  // Add end marker for start symbol
 
     for (auto p : G) {
-        char A = p.first;
+        char lhs = p.first;
         for (string rhs : p.second) {
             for (int i = 0; i < rhs.size(); i++) {
                 if (rhs[i] == X) {
@@ -58,11 +58,11 @@ void computeFOLLOW(char X) {
                             if (f != '#') FOLLOW[X].insert(f);
 
                         if (FIRST[rhs[i + 1]].count('#'))
-                            FOLLOW[X].insert(FOLLOW[A].begin(), FOLLOW[A].end());
+                            FOLLOW[X].insert(FOLLOW[lhs].begin(), FOLLOW[lhs].end());
                     }
 
-                    else if (i + 1 == rhs.size() && X != A) {
-                        FOLLOW[X].insert(FOLLOW[A].begin(), FOLLOW[A].end());
+                    else if (i + 1 == rhs.size() && X != lhs) {
+                        FOLLOW[X].insert(FOLLOW[lhs].begin(), FOLLOW[lhs].end());
                     }
                 }
             }
@@ -73,14 +73,14 @@ void computeFOLLOW(char X) {
 /* ============== BUILD PARSE TABLE ============== */
 void buildParseTable() {
     for (auto p : G) {
-        char A = p.first;
-        for (string prod : p.second) {
+        char lhs = p.first;
+        for (string rhs : p.second) {
             set<char> firstSet;
 
-            if (prod == "#")
+            if  (rhs == "#")
                 firstSet.insert('#');
             else {
-                for (char ch : prod) {
+                for (char ch : rhs) {
                     set<char> f = computeFIRST(ch);
                     firstSet.insert(f.begin(), f.end());
                     if (!f.count('#')) break;
@@ -89,11 +89,11 @@ void buildParseTable() {
 
             for (char t : firstSet)
                 if (t != '#')
-                    PARSE_TABLE[A][t] = string(1, A) + "->" + prod;
+                    PARSE_TABLE[lhs][t] = string(1, lhs) + "->" + rhs;
 
             if (firstSet.count('#'))
-                for (char b : FOLLOW[A])
-                    PARSE_TABLE[A][b] = string(1, A) + "->" + prod;
+                for (char b : FOLLOW[lhs])
+                    PARSE_TABLE[lhs][b] = string(1, lhs) + "->" + rhs;
         }
     }
 }

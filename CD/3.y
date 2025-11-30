@@ -1,9 +1,9 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
-int flag = 0;
-void yyerror(const char *s);
-int yylex(void);
+    #include <stdio.h>
+    #include <stdlib.h>
+    int flag = 0;
+    void yyerror(const char *s);
+    int yylex(void);
 %}
 
 %token NUMBER
@@ -13,7 +13,10 @@ int yylex(void);
 
 %%
 ArithmeticExpression:
-    E { printf("Result = %d\n", $$); return 0; }
+    E { 
+        printf("Result = %d\n", $$); 
+        return 0; 
+    }
 ;
 
 E:

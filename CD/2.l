@@ -12,7 +12,7 @@ WS         [ \t\n]+
 {KEYWORD}      { printf("Keyword: %s\n", yytext); }
 {ID}           { printf("Identifier: %s\n", yytext); }
 {DIGIT}        { printf("Number: %s\n", yytext); }
-"+"|"-"|"*"|"/" { printf("Operator: %s\n", yytext); }
+"+"|"-"|"*"|"/"{ printf("Operator: %s\n", yytext); }
 {WS}           { /* ignore whitespace */ }
 .              { printf("Unknown character: %s\n", yytext); }
 %%
