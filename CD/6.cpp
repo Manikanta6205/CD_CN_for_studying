@@ -95,6 +95,17 @@ vector<string> infix2postfix(vector<string> tokens) {
 /* ---------------------------------------------------
    STEP 4: GENERATE THREE ADDRESS CODE (TAC)
 --------------------------------------------------- */
+
+// Convert temp reference for triples
+string conv(string s) {
+    if (s[0] == 't') {
+        int x = stoi(s.substr(1));
+        x = x - 1;
+        return "(" + to_string(x) + ")";
+    } else {
+        return s;
+    }
+}
 void gen_TAC(vector<string> postfix) {
     vector<tuple<string, string, string, string>> quadruples; // (op, arg1, arg2, result)
     vector<tuple<string, string, string>> triples;            // (op, arg1, arg2)
@@ -115,11 +126,6 @@ void gen_TAC(vector<string> postfix) {
 
             // Store in quadruple format
             quadruples.push_back({x, a, b, tmp});
-
-            // Convert temp reference for triples
-            auto conv = [&](string s) {
-                return (s[0] == 't') ? "(" + to_string(stoi(s.substr(1)) - 1) + ")" : s;
-            };
 
             // Store in triple format
             triples.push_back({x, conv(a), conv(b)});
